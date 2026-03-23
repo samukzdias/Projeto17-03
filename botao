@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portal Central</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: #0a0a0a;
+    color: #e2e8f0;
+    min-height: 100vh;
+}
+
+.portal-container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    text-align: center;
+    padding: 20px;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.main-content {
+    flex: 1;
+    padding: 4rem 2rem;
+    display: grid;
+    grid-template-columns: 1fr 400px;
+    gap: 4rem;
+}
+
+.sidebar {
+    background: rgba(30, 41, 59, 0.6);
+    border-radius: 20px;
+    padding: 2.5rem;
+}
+
+.section-title {
+    margin-bottom: 1.5rem;
+}
+
+.calculator-card {
+    background: rgba(15, 23, 42, 0.8);
+    border-radius: 16px;
+    padding: 2rem;
+}
+
+.calculator-placeholder {
+    min-height: 64px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgba(59, 130, 246, 0.1);
+    border: 2px dashed #475569;
+    border-radius: 12px;
+    gap: 10px;
+}
+
+/* BOTÕES */
+#toggleBtn, #closeBtn {
+    padding: 12px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+#toggleBtn { background: blue; }
+#closeBtn { background: red; display: none; }
+
+#toggleBtn:active, #closeBtn:active {
+    transform: scale(0.9);
+    box-shadow: 0 0 15px rgba(255,255,255,0.6);
+}
+
+/* CALCULADORA */
+#calculadora {
+    display: none;
+    width: 100%;
+}
+
+.calculadora-box {
+    background: #2c2f33;
+    padding: 15px;
+    border-radius: 10px;
+    width: 100%;
+}
+
+.titulo {
+    color: #fff;
+    margin-bottom: 10px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.display {
+    width: 100%;
+    height: 50px;
+    font-size: 18px;
+    text-align: right;
+    margin-bottom: 10px;
+    background: #cfe3cf;
+    border: none;
+    padding: 5px;
+}
+
+.botoes {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 5px;
+}
+
+.botoes button {
+    height: 45px;
+    border-radius: 5px;
+}
+
+.cinza { background: #999; }
+.laranja { background: orange; color: white; }
+.azul { background: #4da6ff; color: white; }
+.vermelho { background: red; color: white; }
+
+.footer {
+    text-align: center;
+    padding: 2rem;
+}
+</style>
+</head>
+
+<body>
+
+<div class="portal-container">
+
+<header class="header">
+    PORTAL DOS CALCULOS
+</header>
+
+<main class="main-content">
+    <div>
+        <h1>Portal dos Calculos</h1>
+        <p>Gerencie suas operações com eficiência máxima.</p>
+    </div>
+
+    <aside class="sidebar">
+        <h2 class="section-title">🧮 Ferramentas Rápidas</h2>
+
+        <div class="calculator-card">
+            <div class="calculator-placeholder">
+
+                <!-- BOTÕES -->
+                <button id="toggleBtn">Abrir Calculadora</button>
+                <button id="closeBtn">Fechar Calculadora</button>
+
+                <!-- CALCULADORA -->
+                <div id="calculadora">
+                    <div class="calculadora-box">
+                        <div class="titulo">XPTO</div>
+                        <input type="text" id="display" class="display" disabled>
+
+                        <div class="botoes">
+                            <button class="azul" onclick="adicionar('Math.sqrt(')">√</button>
+                            <button class="azul" onclick="adicionar('**')">x²</button>
+                            <button class="azul" onclick="adicionar('Math.sin(')">sin</button>
+                            <button class="azul" onclick="adicionar('Math.cos(')">cos</button>
+                            <button class="vermelho" onclick="limpar()">C</button>
+
+                            <button onclick="adicionar('7')">7</button>
+                            <button onclick="adicionar('8')">8</button>
+                            <button onclick="adicionar('9')">9</button>
+                            <button class="laranja" onclick="adicionar('/')">÷</button>
+                            <button class="laranja" onclick="adicionar('*')">×</button>
+
+                            <button onclick="adicionar('4')">4</button>
+                            <button onclick="adicionar('5')">5</button>
+                            <button onclick="adicionar('6')">6</button>
+                            <button class="laranja" onclick="adicionar('-')">−</button>
+                            <button class="laranja" onclick="adicionar('+')">+</button>
+
+                            <button onclick="adicionar('1')">1</button>
+                            <button onclick="adicionar('2')">2</button>
+                            <button onclick="adicionar('3')">3</button>
+                            <button onclick="adicionar('(')">(</button>
+                            <button onclick="adicionar(')')">)</button>
+
+                            <button onclick="adicionar('0')">0</button>
+                            <button onclick="adicionar('.')">.</button>
+                            <button class="cinza" onclick="adicionar('Math.PI')">π</button>
+                            <button class="cinza" onclick="adicionar('Math.log10(')">log</button>
+                            <button class="laranja" onclick="calcular()">=</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </aside>
+</main>
+
+<footer class="footer">
+    <p>&copy; 2026 Portal dos Calculos.</p>
+</footer>
+
+</div>
+
+<script>
+const openBtn = document.getElementById("toggleBtn");
+const closeBtn = document.getElementById("closeBtn");
+const calc = document.getElementById("calculadora");
+
+openBtn.onclick = function () {
+    calc.style.display = "block";
+    openBtn.style.display = "none";
+    closeBtn.style.display = "inline-block";
+};
+
+closeBtn.onclick = function () {
+    calc.style.display = "none";
+    openBtn.style.display = "inline-block";
+    closeBtn.style.display = "none";
+};
+
+/* CALCULADORA */
+function adicionar(valor) {
+    document.getElementById('display').value += valor;
+}
+
+function limpar() {
+    document.getElementById('display').value = '';
+}
+
+function calcular() {
+    try {
+        let resultado = eval(document.getElementById('display').value);
+        document.getElementById('display').value = resultado;
+    } catch {
+        document.getElementById('display').value = 'Erro';
+    }
+}
+</script>
+
+</body>
+</html>
